@@ -82,10 +82,11 @@ const filtering = (res) => {
       console.log("You can get this room now->", result);
     } else {
       if (!result) {
-        console.log("there is no free room now!");
+        result.push("there is no free room now!");
       }
     }
   });
+  return result.join("-");
 };
 
 module.exports = async ({ command, ack, say }) => {
@@ -93,11 +94,9 @@ module.exports = async ({ command, ack, say }) => {
     let start = "2022-03-03T00:00:00.000Z";
     let end = "2022-05-04T00:00:00.000Z";
     await ack();
-    say(
-      getEvents(start, end).then((res) => {
-        filtering(res);
-      })
-    );
+    let result = await getEvents(start, end);
+    let finalResult = filtering(result);
+    say(finalResult);
   } catch (error) {
     console.log(`Error in processing /room command: ${error}`);
   }
