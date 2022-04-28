@@ -49,7 +49,7 @@ const getEvents = async (dateTimeStart, dateTimeEnd) => {
 const filtering = (res) => {
   let result = [];
   const hoursOffset = 1;
-  const room1 = "shared.meeting.room1@gmail.com";
+  const room1 = "Cage room";
   var todayDateMonth = new Date().getDate();
   var todayDateHour = new Date().getHours();
   console.log("todayDateHour", todayDateHour);
@@ -66,6 +66,7 @@ const filtering = (res) => {
       hour <= todayDateHour + hoursOffset
     ) {
       if (!result.includes(room1)) {
+        result=[];
         result.push('you can get this room now: '+room1);
       }
       
@@ -77,10 +78,12 @@ const filtering = (res) => {
     ) {
       console.log("no attendees");
       if (!result.includes(room1)) {
+        result=[];
         result.push('you can get this room now: '+room1);
       }
       
     } else {
+      result=[];
       if (result.length === 0) {
         result.push("there is no free room now!");
       }
