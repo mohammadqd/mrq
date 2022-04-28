@@ -8,7 +8,6 @@ module.exports = async ({ command, ack, say }) => {
         const result = await Reserve(command.text);
         say(result);
     } catch (error) {
-        console.log("err");
-        console.error(error);
+        console.log(`Error in processing /reserve command: ${error}`);
     }
 }
