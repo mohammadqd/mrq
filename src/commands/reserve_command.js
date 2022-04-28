@@ -102,6 +102,7 @@ const Reserve = async (roomName) => {
     let finalResult = filtering(result);
     console.log("finalResult", finalResult);
     if (!finalResult.includes(roomName)) {
+      console.log("you are going to book the room!");
       insertEvent(event)
         .then((res) => {
           console.log(`room ${roomName} reserved for you!`, res);
@@ -117,9 +118,9 @@ const Reserve = async (roomName) => {
 
 module.exports = async ({ command, ack, say }) => {
   try {
-    // await ack();
+    await ack();
     const result = await Reserve(command.text);
-    // say(result);
+    say(result);
   } catch (error) {
     console.log(`Error in processing /reserve command: ${error}`);
   }
