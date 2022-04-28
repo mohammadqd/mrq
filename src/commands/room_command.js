@@ -47,7 +47,7 @@ const getEvents = async (dateTimeStart, dateTimeEnd) => {
 //   });
 
 const filtering = (res) => {
-  let busyRooms = [];
+  let result = [];
   const hoursOffset = 1;
   const room1 = "shared.meeting.room1@gmail.com";
   var todayDateMonth = new Date().getDate();
@@ -65,10 +65,10 @@ const filtering = (res) => {
       hour >= todayDateHour &&
       hour <= todayDateHour + hoursOffset
     ) {
-      if (!busyRooms.includes(room1)) {
-        busyRooms.push(room1);
+      if (!result.includes(room1)) {
+        result.push(room1);
       }
-      console.log("you can get this room now->", busyRooms);
+      console.log("you can get this room now->", result);
     } else if (
       !element.attendees &&
       day === todayDateMonth &&
@@ -76,12 +76,14 @@ const filtering = (res) => {
       hour <= todayDateHour + hoursOffset
     ) {
       console.log("no attendees");
-      if (!busyRooms.includes(room1)) {
-        busyRooms.push(room1);
+      if (!result.includes(room1)) {
+        result.push(room1);
       }
-      console.log("You can get this room now->", busyRooms);
+      console.log("You can get this room now->", result);
     } else {
-      console.log("there is no free room now!");
+      if (!result) {
+        console.log("there is no free room now!");
+      }
     }
   });
 };
