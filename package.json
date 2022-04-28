@@ -1,0 +1,19 @@
+{
+  "name": "mrq",
+  "version": "1.0.0",
+  "description": "Mr.Q is a slack bot",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohammadqd/mrq.git"
+  },
+  "author": "Peyman and Mohammad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohammadqd/mrq/issues"
+  },
+  "homepage": "https://github.com/mohammadqd/mrq#readme"
+}
