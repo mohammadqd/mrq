@@ -21,6 +21,7 @@
     "@slack/bolt": "^3.11.0",
     "dotenv": "^16.0.0",
     "fs": "^0.0.1-security",
+    "googleapis": "^100.0.0",
     "nodemon": "^2.0.15"
   }
 }
