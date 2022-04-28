@@ -38,7 +38,7 @@ module.exports.getEvents = async (dateTimeStart, dateTimeEnd) => {
 module.exports.filtering = (res) => {
   let result = [];
   const hoursOffset = 1;
-  const room1 = "shared.meeting.room1@gmail.com";
+  const room1 = "Cage room";
   var todayDateMonth = new Date().getDate();
   var todayDateHour = new Date().getHours();
   console.log("todayDateHour", todayDateHour);
@@ -54,7 +54,8 @@ module.exports.filtering = (res) => {
       hour <= todayDateHour + hoursOffset
     ) {
       if (!result.includes(room1)) {
-        result.push(room1);
+        result = [];
+        result.push("you can get this room now: " + room1);
       }
     } else if (
       !element.attendees &&
@@ -63,10 +64,12 @@ module.exports.filtering = (res) => {
       hour <= todayDateHour + hoursOffset
     ) {
       if (!result.includes(room1)) {
-        result.push(room1);
+        result = [];
+        result.push("you can get this room now: " + room1);
       }
     } else {
-      if (!result) {
+      result = [];
+      if (result.length === 0) {
         result.push("there is no free room now!");
       }
     }
