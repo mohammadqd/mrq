@@ -66,9 +66,9 @@ const filtering = (res) => {
       hour <= todayDateHour + hoursOffset
     ) {
       if (!result.includes(room1)) {
-        result.push(room1);
+        result.push('you can get this room now: '+room1);
       }
-      console.log("you can get this room now->", result);
+      
     } else if (
       !element.attendees &&
       day === todayDateMonth &&
@@ -77,11 +77,11 @@ const filtering = (res) => {
     ) {
       console.log("no attendees");
       if (!result.includes(room1)) {
-        result.push(room1);
+        result.push('you can get this room now: '+room1);
       }
-      console.log("You can get this room now->", result);
+      
     } else {
-      if (!result) {
+      if (result.length === 0) {
         result.push("there is no free room now!");
       }
     }
