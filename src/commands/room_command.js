@@ -17,7 +17,7 @@ const auth = new google.auth.JWT(
 );
 
 // Get all the events between two dates
-const getEvents = async (dateTimeStart, dateTimeEnd) => {
+module.exports.getEvents = async (dateTimeStart, dateTimeEnd) => {
   try {
     let response = await calendar.events.list({
       auth: auth,
@@ -35,18 +35,7 @@ const getEvents = async (dateTimeStart, dateTimeEnd) => {
   }
 };
 
-// let start = "2022-03-03T00:00:00.000Z";
-// let end = "2022-05-04T00:00:00.000Z";
-
-// getEvents(start, end)
-//   .then((res) => {
-//     filtering(res);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
-const filtering = (res) => {
+module.exports.filtering = (res) => {
   let result = [];
   const hoursOffset = 1;
   const room1 = "shared.meeting.room1@gmail.com";
@@ -57,7 +46,6 @@ const filtering = (res) => {
     const d = new Date(element.start.dateTime);
     const hour = d.getUTCHours() + 2;
     const day = d.getDate();
-    // console.log(d.getUTCMinutes());
     if (
       element.attendees &&
       element.attendees[0].email !== "shared.meeting.room1@gmail.com" &&
@@ -68,18 +56,15 @@ const filtering = (res) => {
       if (!result.includes(room1)) {
         result.push(room1);
       }
-      console.log("you can get this room now->", result);
     } else if (
       !element.attendees &&
       day === todayDateMonth &&
       hour >= todayDateHour &&
       hour <= todayDateHour + hoursOffset
     ) {
-      console.log("no attendees");
       if (!result.includes(room1)) {
         result.push(room1);
       }
-      console.log("You can get this room now->", result);
     } else {
       if (!result) {
         result.push("there is no free room now!");
@@ -89,7 +74,7 @@ const filtering = (res) => {
   return result.join("-");
 };
 
-module.exports = async ({ command, ack, say }) => {
+module.exports.eventHandler = async ({ command, ack, say }) => {
   try {
     let start = "2022-03-03T00:00:00.000Z";
     let end = "2022-05-04T00:00:00.000Z";
