@@ -1,0 +1,32 @@
+{
+    "restaurants": [
+        {
+            "title": "Adria Ristorante & Bar",
+            "info": "The best gluten free pasta in Stockholm, it is fresh and so delicious!",
+            "address": "Tulegatan 10, 113 53 Stockholm",
+            "location": "https://g.page/adriaristorante?share",
+            "picture": "https://lh5.googleusercontent.com/p/AF1QipP_NHerkAWdMTZG3ZzgpigRHdBDc8AR7IXKAc1G=w426-h240-k-no"
+        },
+        {
+            "title": "Sue Ellen",
+            "info": "The Waitors are extremly nice the food is phenomenal. Specially  the lobster slider and the moose stew",
+            "address": "Tulegatan 17, 113 53 Stockholm",
+            "location": "https://g.page/restaurang-sueellen?share",
+            "picture": "https://lh5.googleusercontent.com/p/AF1QipNh0ce1DWATeqNqPatqeWkyQWbWKwf93_LpMKGF=w408-h408-k-no"
+        },
+        {
+            "title": "Zios Pasta & Pizza Italian Restaurant",
+            "info": "Pasta and pizza restaurant serving tasty food with friendly staff. Good value for money at lunchtime with pastas and pizzas at 95 SEK, including bread, water and coffee.",
+            "address": "Döbelnsgatan 34D, 113 52 Stockholm",
+            "location": "https://goo.gl/maps/HXHGKtpuKkiSJPrU9",
+            "picture": "https://lh5.googleusercontent.com/p/AF1QipNFYs9rBqFfEbQyvGvNCFo34b8QcME8ODnq5XiB=w408-h306-k-no"
+        },
+        {
+            "title": "Shahrzad",
+            "info": "A traditional Persian restaurant in the central area of Stockholm.",
+            "address": "Regeringsgatan 111, 111 39 Stockholm",
+            "location": "https://goo.gl/maps/bxwR7m5x2Wf9kCRM7",
+            "picture": "https://lh5.googleusercontent.com/p/AF1QipPXgOH2SIPq5jMcZc4IMw9hqGYF0zQV9AnTQ3vq=w408-h271-k-no"
+        }
+    ]
+}
