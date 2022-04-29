@@ -29,11 +29,11 @@ const Reserve = async (roomName) => {
       if (day < 10) {
         day = `0${day}`;
       }
-      let startHour = date.getHours();
+      let startHour = date.getHours()+2;
       if (startHour < 10) {
         startHour = `0${startHour}`;
       }
-      let endHour = date.getHours() + 1;
+      let endHour = date.getHours() + 3;
       if (endHour < 10) {
         endHour = `0${endHour}`;
       }
