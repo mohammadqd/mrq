@@ -56,7 +56,7 @@ module.exports.filtering = (res) => {
   filterRes.forEach((element) => {
     console.log("element", element);
     const d = new Date(element.start.dateTime);
-    const hour = d.getUTCHours() + 2;
+    const hour = d.getUTCHours();
     console.log("hour", hour);
     const day = d.getDate();
     if (
