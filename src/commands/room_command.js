@@ -38,57 +38,38 @@ module.exports.getEvents = async (dateTimeStart, dateTimeEnd) => {
 };
 
 module.exports.filtering = (res) => {
-  let result = [];
-  const hoursOffset = 1;
   const room1 = "cage";
+  let result = [room1];
+  const hoursOffset = 1;
   const todayDateMonth = new Date().getDate();
-  const todayDateHour = new Date().getHours() + 2;
+  const todayDateHour = new Date().getHours();
+  const todayDateMin = new Date().getMinutes();
   const filtered = res.filter(
     (element) => new Date(element.start.dateTime).getDate() === todayDateMonth
   );
-  const filterRes = filtered.filter(
-    (element) =>
-      new Date(element.start.dateTime).getUTCHours() + 2 < todayDateHour + 1
-  );
-  if (filterRes.length === 0) {
-    result.push(room1);
-  }
-  filterRes.forEach((element) => {
-    console.log("element", element);
-    const d = new Date(element.start.dateTime);
-    const hour = d.getUTCHours();
-    console.log("hour", hour);
-    const day = d.getDate();
+  // const filterRes = filtered.filter(
+  //   (element) =>
+  //     new Date(element.start.dateTime).getUTCHours() + 2 < todayDateHour + 1
+  // );
+  // if (filtered.length === 0) {
+  //   result.push(room1);
+  // }
+  filtered.forEach((element) => {
+    // console.log("element", element);
+    const startTime = new Date(element.start.dateTime);
+    const endTime = new Date(element.end.dateTime);
+    const startHour = startTime.getUTCHours();
+    const endMin = startTime.getUTCMinutes();
+    const endHour = endTime.getUTCHours();
     if (
       element.attendees &&
-      element.attendees[0].email !== "shared.meeting.room1@gmail.com" &&
-      day === todayDateMonth &&
-      hour >= todayDateHour
+      element.attendees[0].email === "shared.meeting.room1@gmail.com" &&
+      (endHour > todayDateHour ||
+        (endHour === todayDateHour && endMin > todayDateMin)) &&
+      startHour < todayDateHour + 1
     ) {
-      if (!result.includes(room1)) {
-        result = [];
-        result.push(room1);
-        console.log("you can book");
-      }
-    } else if (
-      !element.attendees &&
-      day === todayDateMonth &&
-      hour >= todayDateHour &&
-      hour <= todayDateHour + hoursOffset
-    ) {
-      if (!result.includes(room1)) {
-        result = [];
-        result.push(room1);
-        console.log("you can book");
-      }
+      result = [];
     }
-    // else {
-    //   if (result.length === 0) {
-    //     result = [];
-    //     result.push("there is no free room now!");
-    //     console.log("you can not book");
-    //   }
-    // }
   });
   if (result.length === 0) {
     return "there is no free room now!";
@@ -103,7 +84,6 @@ module.exports.eventHandler = async ({ command, ack, say }) => {
     await ack();
     let result = await module.exports.getEvents(start, end);
     let finalResult = module.exports.filtering(result);
-    console.log("return----->", finalResult);
     say(finalResult);
   } catch (error) {
     console.log(`Error in processing /room command: ${error}`);
