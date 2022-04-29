@@ -26,8 +26,7 @@ app.message(/hey/, require('./message_handlers/hey_message_handler'));
 
 app.command("/room", require('./commands/room_command'));
 app.command("/reserve", require('./commands/reserve_command'));
-app.command("/lunch", require('./commands/lunch_command'));
-
+app.command("/restaurant", require('./commands/restaurant_command'));
 
 
 app.command("/knowledge", async ({ command, ack, say }) => {
