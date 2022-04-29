@@ -86,6 +86,6 @@ module.exports.eventHandler = async ({ command, ack, say }) => {
     let finalResult = filtering(result);
     say(finalResult);
   } catch (error) {
-    console.log(`Error in processing /room command: ${error}`);
+    console.log(`Error in processing/room command: ${error}`);
   }
 };
