@@ -18,6 +18,7 @@ const auth = new google.auth.JWT(
 
 // Get all the events between two dates
 module.exports.getEvents = async (dateTimeStart, dateTimeEnd) => {
+  console.log("get event");
   try {
     let response = await calendar.events.list({
       auth: auth,
@@ -28,6 +29,7 @@ module.exports.getEvents = async (dateTimeStart, dateTimeEnd) => {
     });
 
     let items = response["data"]["items"];
+    // filtering(items);
     return items;
   } catch (error) {
     console.log(`Error at getEvents --> ${error}`);
@@ -38,24 +40,35 @@ module.exports.getEvents = async (dateTimeStart, dateTimeEnd) => {
 module.exports.filtering = (res) => {
   let result = [];
   const hoursOffset = 1;
-  const room1 = "Cage room";
-  var todayDateMonth = new Date().getDate();
-  var todayDateHour = new Date().getHours();
-  console.log("todayDateHour", todayDateHour);
-  res.forEach((element) => {
+  const room1 = "cage";
+  const todayDateMonth = new Date().getDate();
+  const todayDateHour = new Date().getHours();
+  const filtered = res.filter(
+    (element) => new Date(element.start.dateTime).getDate() === todayDateMonth
+  );
+  const filterRes = filtered.filter(
+    (element) =>
+      new Date(element.start.dateTime).getUTCHours() + 2 < todayDateHour + 1
+  );
+  if (filterRes.length === 0) {
+    result.push(room1);
+  }
+  filterRes.forEach((element) => {
+    console.log("element", element);
     const d = new Date(element.start.dateTime);
     const hour = d.getUTCHours() + 2;
+    console.log("hour", hour);
     const day = d.getDate();
     if (
       element.attendees &&
       element.attendees[0].email !== "shared.meeting.room1@gmail.com" &&
       day === todayDateMonth &&
-      hour >= todayDateHour &&
-      hour <= todayDateHour + hoursOffset
+      hour >= todayDateHour
     ) {
       if (!result.includes(room1)) {
         result = [];
-        result.push("you can get this room now: " + room1);
+        result.push(room1);
+        console.log("you can book");
       }
     } else if (
       !element.attendees &&
@@ -65,16 +78,22 @@ module.exports.filtering = (res) => {
     ) {
       if (!result.includes(room1)) {
         result = [];
-        result.push("you can get this room now: " + room1);
-      }
-    } else {
-      result = [];
-      if (result.length === 0) {
-        result.push("there is no free room now!");
+        result.push(room1);
+        console.log("you can book");
       }
     }
+    // else {
+    //   if (result.length === 0) {
+    //     result = [];
+    //     result.push("there is no free room now!");
+    //     console.log("you can not book");
+    //   }
+    // }
   });
-  return result.join("-");
+  if (result.length === 0) {
+    return "there is no free room now!";
+  }
+  return "Available rooms are: " + result.join("-");
 };
 
 module.exports.eventHandler = async ({ command, ack, say }) => {
@@ -82,10 +101,11 @@ module.exports.eventHandler = async ({ command, ack, say }) => {
     let start = "2022-03-03T00:00:00.000Z";
     let end = "2022-05-04T00:00:00.000Z";
     await ack();
-    let result = await getEvents(start, end);
-    let finalResult = filtering(result);
+    let result = await module.exports.getEvents(start, end);
+    let finalResult = module.exports.filtering(result);
+    console.log("return----->", finalResult);
     say(finalResult);
   } catch (error) {
-    console.log(`Error in processing/room command: ${error}`);
+    console.log(`Error in processing /room command: ${error}`);
   }
 };

@@ -24,7 +24,7 @@ app.message(/hey/, require('./message_handlers/hey_message_handler'));
 // Routing Commands
 // ----------------
 
-app.command("/room", require('./commands/room_command'));
+app.command("/room", require('./commands/room_command').eventHandler);
 app.command("/reserve", require('./commands/reserve_command'));
 app.command("/restaurant", require('./commands/restaurant_command'));
 
