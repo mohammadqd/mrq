@@ -42,7 +42,7 @@ module.exports.filtering = (res) => {
   const hoursOffset = 1;
   const room1 = "cage";
   const todayDateMonth = new Date().getDate();
-  const todayDateHour = new Date().getHours();
+  const todayDateHour = new Date().getHours() + 2;
   const filtered = res.filter(
     (element) => new Date(element.start.dateTime).getDate() === todayDateMonth
   );
